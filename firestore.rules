@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isAdmin() { return signedIn() && request.auth.token.email == 'admin@soul.com'; }
+    function isMember() {
+      return signedIn();
+    }
+
+    match /membros/{uid} {
+      allow read: if isMember();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /user_has/{id} {
+      allow read: if isMember();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /torneios/{id} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+  }
+}

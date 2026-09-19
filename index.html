@@ -1,0 +1,151 @@
+index <!doctype html>
+<html lang='pt-PT'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width,initial-scale=1'>
+    <title>SOUL SOCIETY • SSS</title>
+    <link rel='preconnect' href='https://fonts.googleapis.com'>
+    <link
+        href='https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap'
+        rel='stylesheet'>
+    <link rel='stylesheet' href='style.css'>
+</head>
+
+<body>
+    <div class='app'>
+        <aside class='side'>
+            <div class='brand'>
+                <div class='crest'><span>SS</span></div>
+                <div><b>SOUL SOCIETY</b><small>SSS • CLAN PORTAL</small></div>
+            </div>
+            <div class='navtitle'>NAVEGAÇÃO</div>
+            <nav class='nav'>
+                <a class='active' href='#inicio'>◈ <span>Início</span></a>
+                <a href='#membros'>♙ <span>Shinigame</span></a>
+                <a href='#area-membros-clã' id='navMembros' class='escondido'>👥 <span> HAs </span></a>
+                <a href='#area-gerenciar-membros' id='navGerenciarMembros' class='escondido'>⚙ <span>Gerenciar
+                        Membros</span></a>
+                <a href='#torneios'>⚔ <span>Torneios</span></a>
+                <a href='#ranking'>♜ <span>Ranking</span></a>
+            </nav>
+            <div class='bottom'>PORTAL V4<br>SOUL SOCIETY • 2026</div>
+        </aside>
+
+        <main class='main'>
+            <header class='top'>
+                <div class='crumb'>SSS / <span style='color:#777'>PORTAL DA SOCIEDADE</span></div>
+                <div class='user' style='cursor:pointer;' onclick='window.abrirLogin()'>
+                    <i class='dot' id='statusDot'></i> <span id='statusText'>LOGIN</span>
+                </div>
+            </header>
+
+            <section class='hero' id='inicio'>
+                <div>
+                    <div class='ey'>THE SPIRITUAL REALM • EST. 2026</div>
+                    <h1>SOUL<br><em>SOCIETY</em></h1>
+                    <p>Um espaço criado para reunir a força competitiva e os breeders da SSS.</p>
+                </div>
+            </section>
+
+            <section class='section escondido' id='area-membros-clã'>
+                <div class='sectionhead'>
+                    <div>
+                        <div class='ey'>ACESSO RESTRITO</div>
+                        <h2>HAs do Clã</h2>
+                        <div class='sub'>Catálogo de Hidden Abilities pertencentes aos membros da SSS.</div>
+                    </div>
+                    <input class='search' id='pesquisaHAsMembros' placeholder='Pesquisar Pokémon, Forma ou Membro...'
+                        oninput='window.filtrarHAsMembros(this.value)'>
+                </div>
+                <div class='has' id='lista-has-membros'></div>
+            </section>
+
+            <section class='section escondido' id='area-gerenciar-membros'>
+                <div class='sectionhead'>
+                    <div>
+                        <div class='ey'>ADMINISTRAÇÃO</div>
+                        <h2>Gerenciar Membros</h2>
+                        <div class='sub'>Somente o Admin pode adicionar ou remover membros do portal.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class='section' id='membros'>
+                <div class='sectionhead'>
+                    <div>
+                        <h2>Shinigame</h2>
+                    </div>
+                </div>
+                <div class='members' id='members'></div>
+            </section>
+
+            <section class='section' id='torneios'>
+                <div class='sectionhead'>
+                    <div>
+                        <h2>Torneios</h2>
+                    </div>
+                    <button id='btnCriarTorneio' class='btn red escondido' onclick='window.openModal()'>+ CRIAR
+                        TORNEIO</button>
+                </div>
+                <div class='tournaments' id='tours'></div>
+            </section>
+
+
+            <section class='section' id='ranking'>
+                <div class='sectionhead'>
+                    <div>
+                        <h2>Ranking</h2>
+                        <div class='sub'>Pontuação dos membros da SOUL SOCIETY.</div>
+                    </div>
+                </div>
+                <div class='ranking' id='ranking-lista'></div>
+            </section>
+
+            <footer class='footer'>
+                <span>SOUL SOCIETY • SSS</span>
+                <span>PORTAL V4 • 2026</span>
+            </footer>
+        </main>
+    </div>
+
+    <div class='modal' id='modal'>
+        <div class='box'>
+            <button class='close' onclick='window.closeModal()'>×</button>
+            <h2>Novo Torneio</h2>
+            <input id='tourNome' placeholder='Nome do Torneio (ex: Copa SSS #1)'>
+            <input id='tourDia' placeholder='Dia (ex: Sábado, 25/10)'>
+            <input id='tourHorario' placeholder='Horário (ex: 15:00)'>
+            <select id='tourTier' onchange='window.verificarOutraTier(this.value)'>
+                <option value="" disabled selected>Selecione a Tier</option>
+                <option value="OU">OU (OverUsed)</option>
+                <option value="UU">UU (UnderUsed)</option>
+                <option value="RU">RU (RarelyUsed)</option>
+                <option value="NU">NU (NeverUsed)</option>
+                <option value="LC">LC (Little Cup)</option>
+                <option value="Monotype">Monotype</option>
+                <option value="Ubers">Ubers</option>
+                <option value="DOU">Doubles OU (DOU)</option>
+                <option value="outro">Outra Tier (Escrever manual)</option>
+            </select>
+            <input id='tourTierCustom' class='escondido' placeholder='Digite a tier personalizada...'>
+            <button class='btn red' onclick='window.adicionarTorneio()'>PUBLICAR TORNEIO</button>
+            <button class='btn' onclick='window.closeModal()'>FECHAR</button>
+        </div>
+    </div>
+
+    <div class='modal' id='modalLogin'>
+        <div class='box'>
+            <button class='close' onclick='window.fecharLogin()'>×</button>
+            <div class='ey'>SISTEMA FIREBASE</div>
+            <h2>Iniciar Sessão</h2>
+            <input id='adminEmail' type='email' placeholder='E-mail (ex: admin@sss.com)'>
+            <input type='password' id='adminPass' placeholder='Palavra-passe'>
+            <button class='btn red' onclick='window.fazerLogin()'>ENTRAR</button>
+        </div>
+    </div>
+
+    <script type='module' src='script.js'></script>
+</body>
+
+</html>
